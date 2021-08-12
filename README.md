@@ -7,7 +7,7 @@ TimeOverlapping package is a lightweight and blazing fast for checking the time 
 
 This package accepts only `List<OverlapParams>` 
 
-####OverlapParams
+###OverlapParams
 
 This requires an uniqueId, DateTimeRange & dynamic data*.
 > dynamic data is type **dynamic** which accepts any sort of data.
@@ -57,7 +57,7 @@ void main() {
   print(TimeOverlapFinder.findOverlap(overlapParams));
 }
 ```
-#####Output
+####Output
 ```dart
 ['001', '002']
 ```
@@ -96,7 +96,7 @@ void main() {
   print(TimeOverlapFinder.findOverlapWithData(overlapParams));
 }
 ```
-#####Output
+####Output
 ```dart
  [
     OverlapParams(001, 2021-08-12 07:36:07.095 - 2021-08-12 09:36:07.095, {}),
@@ -127,7 +127,7 @@ void main() {
 }
 ```
 
-#####Output
+####Output
 ```dart
 true
 ```
