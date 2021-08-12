@@ -19,7 +19,6 @@ jobs:
         pub get
         pub global activate test_coverage
         pub global run test_coverage --exclude "**/js/**"
-      working-directory: time_overlapping
     - uses: codecov/codecov-action@v1.0.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
