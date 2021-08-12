@@ -3,7 +3,7 @@ name: Coverage
 on:
   push:
     branches:
-    - master
+    - main
 
 jobs:
   coverage-hive:
@@ -23,4 +23,4 @@ jobs:
     - uses: codecov/codecov-action@v1.0.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: hive/coverage/lcov.info
+        
