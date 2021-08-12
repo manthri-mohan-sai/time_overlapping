@@ -240,5 +240,58 @@ void main() {
         '0012'
       ]);
     });
+
+    test('Testing single dateTimeRange', () {
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 2)),
+      );
+
+      final overlapParams = [
+        OverlapParams('001', range1, {}),
+      ];
+
+      expect(TimeOverlapFinder.findOverlap(overlapParams), <String>[]);
+    });
+
+    test('Testing single dateTimeRange with data', () {
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 2)),
+      );
+
+      final overlapParams = [
+        OverlapParams('001', range1, {'name': 'userA'}),
+      ];
+
+      expect(TimeOverlapFinder.findOverlapWithData(overlapParams), <String>[]);
+    });
+
+    test('Testing hasOverlap method: 1', () {
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 2)),
+      );
+
+      final range2 = DateTimeRange(
+        start: DateTime.now().add(const Duration(hours: 2)),
+        end: DateTime.now().add(const Duration(hours: 3)),
+      );
+      expect(TimeOverlapFinder.hasOverlap(range1, range2), false);
+    });
+
+    test('Testing hasOverlap method: 2', () {
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 2)),
+      );
+
+      final range2 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 1)),
+      );
+
+      expect(TimeOverlapFinder.hasOverlap(range1, range2), true);
+    });
   });
 }

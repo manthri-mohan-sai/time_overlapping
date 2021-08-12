@@ -59,13 +59,7 @@ class TimeOverlapFinder {
   }
 
   static bool hasOverlap(DateTimeRange range1, DateTimeRange range2) {
-    /// A1 - B1 A2 - B2 or A2 - B2 A1 - B1
-    if (!(range1.end.isBefore(range2.start) ||
-        range2.end.isBefore(range1.start))) {
-      return true;
-    } else {
-      return false;
-    }
+    return !(range2.isBefore(range1) || range2.isAfter(range1));
   }
 
   static List<T> _calculateOverlapRanges<T>(List<OverlapParams> ranges) {
