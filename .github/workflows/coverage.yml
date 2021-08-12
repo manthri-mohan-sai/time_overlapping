@@ -17,7 +17,7 @@ jobs:
         flutter pub get
         flutter pub global activate test_coverage
         flutter pub global run test_coverage --exclude "**/js/**"
-    - uses: codecov/codecov-action@v1.0.0
+    - uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: time_overlapping/coverage/lcov.info
+        path_to_write_report: ./coverage/codecov_report.txt
