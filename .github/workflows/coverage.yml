@@ -6,7 +6,7 @@ on:
     - main
 
 jobs:
-  coverage-hive:
+  coverage-time-overlapping:
     runs-on: ubuntu-latest
     
     steps:
@@ -20,3 +20,4 @@ jobs:
     - uses: codecov/codecov-action@v1.0.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        file: time_overlapping/coverage/lcov.info
