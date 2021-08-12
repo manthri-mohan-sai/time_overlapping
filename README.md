@@ -8,6 +8,7 @@ TimeOverlapping package is a lightweight and blazing fast for checking the time 
 This package accepts only `List<OverlapParams>` 
 
 ####OverlapParams
+
 This requires an uniqueId, DateTimeRange & dynamic data*.
 > dynamic data is type **dynamic** which accepts any sort of data.
 
