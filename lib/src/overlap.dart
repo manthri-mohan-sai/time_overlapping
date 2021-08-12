@@ -51,7 +51,7 @@ class TimeOverlapFinder {
         'with the same value',
       );
       return _calculateOverlapRanges<OverlapParams>(overlapParams);
-    }  on AssertionError catch (_) {
+    } on AssertionError catch (_) {
       rethrow;
     }
   }

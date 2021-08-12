@@ -1,6 +1,6 @@
 name: time_overlapping
 description: A package for checking the time overlapping in the given DateTime ranges.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/MohanSaiManthri/time_overlapping
 
 environment:

@@ -40,7 +40,7 @@ extension DateTimeRangeExtensions on DateTimeRange {
   }
 
   /// [isCrossingStart] will help whether this timeRange is crossing other timerange start or not.
-  // Eg: 
+  // Eg:
   //|-- A --|
   //       |-- B --|
   bool isCrossingStart(DateTimeRange other) {
@@ -48,7 +48,7 @@ extension DateTimeRangeExtensions on DateTimeRange {
   }
 
   /// [isCrossingEnd] will help whether this timeRange crossing other timerange end or not.
-  // Eg: 
+  // Eg:
   // |-- B --|
   //        |-- A --|
   bool isCrossingEnd(DateTimeRange other) {

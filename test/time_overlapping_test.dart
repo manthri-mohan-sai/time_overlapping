@@ -36,7 +36,7 @@ void main() {
 
       expect(() => TimeOverlapFinder.findOverlap(overlapParams),
           throwsAssertionError);
-          expect(() => TimeOverlapFinder.findOverlapWithData(overlapParams),
+      expect(() => TimeOverlapFinder.findOverlapWithData(overlapParams),
           throwsAssertionError);
     });
 

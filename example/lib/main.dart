@@ -30,4 +30,5 @@ void main() {
   ];
 
   print(TimeOverlapFinder.findOverlap(overlapParams));
+  print(TimeOverlapFinder.findOverlapWithData(overlapParams));
 }
