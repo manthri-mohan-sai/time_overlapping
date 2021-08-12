@@ -135,4 +135,17 @@ void main() {
 true
 ```
 
+#### Some useful extensions
+
+```dart
+1. range1.isBefore(range2),
+2. range1.isAfter(range2),
+```
+
+```dart
+1. range1.isCrossing(range2),
+2. range1.isCrossingStart(range2),
+3. range1.isCrossingEnd(range2),
+```
+
 ### Thanks for using my package 🙏

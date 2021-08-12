@@ -68,6 +68,30 @@ void main() {
       expect(TimeOverlapFinder.findOverlap(overlapParams), ['001', '002']);
     });
 
+    test('Testing ordered overlap ranges: 2', () {
+      final range1 = DateTimeRange(
+        start: DateTime(2021, 8, 12, 10, 00),
+        end: DateTime(2021, 8, 12, 10, 10),
+      );
+
+      final range2 = DateTimeRange(
+        start: DateTime(2021, 8, 12, 10, 00),
+        end: DateTime(2021, 8, 12, 10, 20),
+      );
+
+      final range3 = DateTimeRange(
+        start: DateTime(2021, 8, 12, 10, 00),
+        end: DateTime(2021, 8, 12, 10, 15),
+      );
+
+      final overlapParams = [
+        OverlapParams('001', range1, {}),
+        OverlapParams('002', range2, {}),
+        OverlapParams('003', range3, {}),
+      ];
+      expect(
+          TimeOverlapFinder.findOverlap(overlapParams), ['001', '002', '003']);
+    });
     test('Testing unOrdered overlap ranges', () {
       final range1 = DateTimeRange(
         start: DateTime.now(),
@@ -236,8 +260,8 @@ void main() {
         '008',
         '009',
         '0010',
-        '0011',
-        '0012'
+        '0012',
+        '0011'
       ]);
     });
 
@@ -292,6 +316,25 @@ void main() {
       );
 
       expect(TimeOverlapFinder.hasOverlap(range1, range2), true);
+    });
+
+    test('Testing isCrossing function', () {
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 2)),
+      );
+
+      final range2 = DateTimeRange(
+        start: DateTime.now().add(const Duration(hours: 1,minutes: 30)),
+        end: DateTime.now().add(const Duration(hours: 3)),
+      );
+
+      expect(range2.isCrossing(range1), true);
+      expect(range1.isCrossing(range2), true);
+      expect(range1.isCrossingStart(range2), true);
+      expect(range2.isCrossingStart(range1), false);
+      expect(range2.isCrossingEnd(range1), true);
+      expect(range1.isCrossingEnd(range2), false);
     });
   });
 }

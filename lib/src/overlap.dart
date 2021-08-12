@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:time_overlapping/time_overlapping.dart';
 
 class TimeOverlapFinder {
-  TimeOverlapFinder._internal();
+  const TimeOverlapFinder._internal();
 
   /// returns all the overlapping Id's ie.., `List<String>`.
   ///
@@ -67,7 +67,25 @@ class TimeOverlapFinder {
 
     /// [sort] all the ranges, so that we can easily find the overlapping.
     /// instead of dangling between indexes.
-    ranges.sort((a, b) => a.dateTimeRange.start.compareTo(b.dateTimeRange.end));
+    ranges
+        .sort((a, b) => a.dateTimeRange.start.compareTo(b.dateTimeRange.start));
+
+    if (ranges.length == 2) {
+      final hasTimeOverlap =
+          hasOverlap(ranges.first.dateTimeRange, ranges.last.dateTimeRange);
+
+      if (hasTimeOverlap) {
+        if (T == String) {
+          overlapList.add(ranges.first.id as T);
+          overlapList.add(ranges.last.id as T);
+          return overlapList.toList();
+        } else if (T == OverlapParams) {
+          return ranges as List<T>;
+        }
+      } else {
+        return overlapList.toList();
+      }
+    }
 
     for (var i = 0; i < ranges.length - 1; i++) {
       /// [subIndex] is an integer which points to next index.
@@ -96,7 +114,7 @@ class TimeOverlapFinder {
       ///
       /// This will iterate till the moment we dont have overlap with next
       /// dateTimeRange.
-      while ((!(isBefore || isAfter)) && subIndex < ranges.length - 1) {
+      while ((!(isBefore || isAfter)) && subIndex < ranges.length) {
         subIndex += 1;
         if (T == String) {
           overlapList.add(rangeAtIndex.id as T);
@@ -104,6 +122,10 @@ class TimeOverlapFinder {
         } else if (T == OverlapParams) {
           overlapList.add(rangeAtIndex as T);
           overlapList.add(rangeAtFutureIndex as T);
+        }
+
+        if (subIndex >= ranges.length - 1) {
+          break;
         }
 
         rangeAtIndex = ranges.elementAt(i);

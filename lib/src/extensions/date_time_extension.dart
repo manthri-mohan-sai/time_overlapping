@@ -26,4 +26,32 @@ extension DateTimeRangeExtensions on DateTimeRange {
     final isNotAfterRange = !otherRangeEnd.isAfter(start);
     return (pointInRange || isBeforeRange) && isNotAfterRange;
   }
+
+  /// [isCrossing] will help whether this timerange is crossing other or not.
+  /// Either it can start or end. it will return bool.
+  // 1.
+  // |-- A --|
+  //        |-- B --|
+  // 2.
+  //        |-- A --|
+  // |-- B --|
+  bool isCrossing(DateTimeRange other) {
+    return isCrossingStart(other) || isCrossingEnd(other);
+  }
+
+  /// [isCrossingStart] will help whether this timeRange is crossing other timerange start or not.
+  // Eg: 
+  //|-- A --|
+  //       |-- B --|
+  bool isCrossingStart(DateTimeRange other) {
+    return end.isBefore(other.start) || start.isBefore(other.start);
+  }
+
+  /// [isCrossingEnd] will help whether this timeRange crossing other timerange end or not.
+  // Eg: 
+  // |-- B --|
+  //        |-- A --|
+  bool isCrossingEnd(DateTimeRange other) {
+    return start.isAfter(other.end) || end.isAfter(other.end);
+  }
 }
