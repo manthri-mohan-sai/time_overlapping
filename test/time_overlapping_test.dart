@@ -36,6 +36,8 @@ void main() {
 
       expect(() => TimeOverlapFinder.findOverlap(overlapParams),
           throwsAssertionError);
+          expect(() => TimeOverlapFinder.findOverlapWithData(overlapParams),
+          throwsAssertionError);
     });
 
     test('Testing ordered overlap ranges', () {
@@ -304,6 +306,44 @@ void main() {
       expect(TimeOverlapFinder.hasOverlap(range1, range2), false);
     });
 
+    test('Testing findOverlap  for 2 items without overlapping', () {
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 2)),
+      );
+
+      final range2 = DateTimeRange(
+        start: DateTime.now().add(const Duration(hours: 2)),
+        end: DateTime.now().add(const Duration(hours: 3)),
+      );
+
+      final overlapParams = [
+        OverlapParams('001', range1, {'name': 'userA'}),
+        OverlapParams('002', range2, {'name': 'userB'}),
+      ];
+
+      expect(TimeOverlapFinder.findOverlap(overlapParams), []);
+    });
+
+    test('Testing findOverlap  for 2 items with overlapping', () {
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 2)),
+      );
+
+      final range2 = DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(hours: 1)),
+      );
+
+      final overlapParams = [
+        OverlapParams('001', range1, {'name': 'userA'}),
+        OverlapParams('002', range2, {'name': 'userB'}),
+      ];
+
+      expect(TimeOverlapFinder.findOverlap(overlapParams), ['001', '002']);
+    });
+
     test('Testing hasOverlap method: 2', () {
       final range1 = DateTimeRange(
         start: DateTime.now(),
@@ -325,7 +365,7 @@ void main() {
       );
 
       final range2 = DateTimeRange(
-        start: DateTime.now().add(const Duration(hours: 1,minutes: 30)),
+        start: DateTime.now().add(const Duration(hours: 1, minutes: 30)),
         end: DateTime.now().add(const Duration(hours: 3)),
       );
 
