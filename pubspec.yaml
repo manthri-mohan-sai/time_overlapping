@@ -1,7 +1,7 @@
 name: time_overlapping
 description: A package for checking the time overlapping in the given DateTime ranges.
 version: 0.0.1
-homepage:
+homepage: https://github.com/MohanSaiManthri/time_overlapping
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
