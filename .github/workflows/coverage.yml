@@ -9,16 +9,14 @@ jobs:
   coverage-hive:
     runs-on: ubuntu-latest
     
-    container:
-      image:  google/dart:latest
-    
     steps:
     - uses: actions/checkout@v1
+    - uses: subosito/flutter-action@v1
     - name: Collect coverage
       run: |
-        pub get
-        pub global activate test_coverage
-        pub global run test_coverage --exclude "**/js/**"
+        flutter pub get
+        flutter pub global activate test_coverage
+        flutter pub global run test_coverage --exclude "**/js/**"
     - uses: codecov/codecov-action@v1.0.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
