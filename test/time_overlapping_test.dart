@@ -390,6 +390,29 @@ void main() {
           false);
     });
 
+    test('Testing Allow touches: Allow touches True Ignore Seconds: False', () {
+      final _commonTime = DateTime.now().add(const Duration(hours: 2));
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: _commonTime,
+      );
+
+      final range2 = DateTimeRange(
+        start: _commonTime,
+        end: _commonTime.add(const Duration(hours: 1)),
+      );
+      print(range1);
+      print(range2);
+      expect(
+          TimeOverlapFinder.hasOverlap(
+            range1,
+            range2,
+            allowTouches: true,
+            ignoreSeconds: false,
+          ),
+          false);
+    });
+
     test('Testing isCrossing function', () {
       final range1 = DateTimeRange(
         start: DateTime.now(),
