@@ -1,3 +1,7 @@
+## 0.0.5
+
+* `allowTouches`, `ignoreSeconds` functionality added [#1] Github issue - Resolved.
+
 ## 0.0.4
 
 * Code formatting.
