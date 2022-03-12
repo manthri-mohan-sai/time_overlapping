@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:time_overlapping/src/overlap.dart';
-
 import 'package:time_overlapping/time_overlapping.dart';
 
 void main() {
@@ -356,6 +354,40 @@ void main() {
       );
 
       expect(TimeOverlapFinder.hasOverlap(range1, range2), true);
+    });
+
+    test('Testing Allow touches: Allow touches `False`', () {
+      final _commonTime = DateTime.now().add(const Duration(hours: 2));
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: _commonTime,
+      );
+
+      final range2 = DateTimeRange(
+        start: _commonTime,
+        end: _commonTime.add(const Duration(hours: 1)),
+      );
+      print(range1);
+      print(range2);
+      expect(TimeOverlapFinder.hasOverlap(range1, range2, allowTouches: false),
+          true);
+    });
+
+    test('Testing Allow touches: Allow touches `True`', () {
+      final _commonTime = DateTime.now().add(const Duration(hours: 2));
+      final range1 = DateTimeRange(
+        start: DateTime.now(),
+        end: _commonTime,
+      );
+
+      final range2 = DateTimeRange(
+        start: _commonTime,
+        end: _commonTime.add(const Duration(hours: 1)),
+      );
+      print(range1);
+      print(range2);
+      expect(TimeOverlapFinder.hasOverlap(range1, range2, allowTouches: true),
+          false);
     });
 
     test('Testing isCrossing function', () {

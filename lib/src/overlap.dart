@@ -11,7 +11,11 @@ class TimeOverlapFinder {
   /// TimeOverlapFinder.findOverlapWithData(overlapParams);
   /// ```
   /// ...
-  static List<String> findOverlap(List<OverlapParams> overlapParams) {
+  static List<String> findOverlap(
+    List<OverlapParams> overlapParams, {
+    bool allowTouches: true,
+    bool ignoreSeconds: true,
+  }) {
     try {
       if (overlapParams.length < 2) {
         return <String>[];
@@ -38,8 +42,10 @@ class TimeOverlapFinder {
   /// ```
   /// ...
   static List<OverlapParams> findOverlapWithData(
-    List<OverlapParams> overlapParams,
-  ) {
+    List<OverlapParams> overlapParams, {
+    bool allowTouches: true,
+    bool ignoreSeconds: true,
+  }) {
     try {
       if (overlapParams.length < 2) {
         return <OverlapParams>[];
@@ -56,11 +62,62 @@ class TimeOverlapFinder {
     }
   }
 
-  static bool hasOverlap(DateTimeRange range1, DateTimeRange range2) {
-    return !(range2.isBefore(range1) || range2.isAfter(range1));
+  /// `allowTouches` defaults to true thus ignore any start, end overlapping
+  /// Eg:
+  /// ```dart
+  /// 2022-03-12 11:47 - 2022-03-12 13:47
+  /// 2022-03-12 13:47 - 2022-03-12 14:47
+  /// ```
+  ///
+  /// `allowTouches: true` will return hasOverlap false;
+  /// `false` will return hasOverlap true;
+  ///
+  ///
+  /// ```dart
+  /// if ignoreSeconds: true
+  /// ```
+  /// will makes seconds to `0` thus comparing
+  /// only date, hour and minutes.
+  ///
+  static bool hasOverlap(
+    DateTimeRange range1,
+    DateTimeRange range2, {
+    bool allowTouches: true,
+    bool ignoreSeconds: true,
+  }) {
+    bool _hasOverlap = !(range2.isBefore(range1) || range2.isAfter(range1));
+    if (allowTouches) return _hasOverlap;
+    return hasTouch(range1, range2, ignoreSeconds: ignoreSeconds);
   }
 
-  static List<T> _calculateOverlapRanges<T>(List<OverlapParams> ranges) {
+  /// Checks the range has any touches at start or end
+  /// Default: Ranges start and end's milliseconds will make `0` before comparing
+  /// ```dart
+  /// if ignoreSeconds: true
+  /// ```
+  /// will makes seconds to `0` thus comparing
+  /// only date, hour and minutes.
+  ///
+  static bool hasTouch(
+    DateTimeRange range,
+    DateTimeRange other, {
+    bool ignoreSeconds: false,
+  }) {
+    final maskedRange =
+        ignoreSeconds ? range.maskSeconds() : range.maskMilliSeconds();
+    final maskedOther =
+        ignoreSeconds ? other.maskSeconds() : other.maskMilliSeconds();
+    return maskedRange.start.isAtSameMomentAs(maskedOther.start) ||
+        maskedRange.end.isAtSameMomentAs(maskedOther.start) ||
+        maskedRange.start.isAtSameMomentAs(maskedOther.end) ||
+        maskedRange.end.isAtSameMomentAs(maskedOther.end);
+  }
+
+  static List<T> _calculateOverlapRanges<T>(
+    List<OverlapParams> ranges, {
+    bool allowTouches: true,
+    bool ignoreSeconds: true,
+  }) {
     final overlapList = <T>{};
 
     /// [sort] all the ranges, so that we can easily find the overlapping.
@@ -69,8 +126,12 @@ class TimeOverlapFinder {
         .sort((a, b) => a.dateTimeRange.start.compareTo(b.dateTimeRange.start));
 
     if (ranges.length == 2) {
-      final hasTimeOverlap =
-          hasOverlap(ranges.first.dateTimeRange, ranges.last.dateTimeRange);
+      final hasTimeOverlap = hasOverlap(
+        ranges.first.dateTimeRange,
+        ranges.last.dateTimeRange,
+        allowTouches: allowTouches,
+        ignoreSeconds: ignoreSeconds,
+      );
 
       if (hasTimeOverlap) {
         if (T == String) {
