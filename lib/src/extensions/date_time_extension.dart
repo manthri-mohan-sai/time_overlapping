@@ -54,4 +54,44 @@ extension DateTimeRangeExtensions on DateTimeRange {
   bool isCrossingEnd(DateTimeRange other) {
     return start.isAfter(other.end) || end.isAfter(other.end);
   }
+
+  /// Makes both start & end of a timeRange `seconds` `millisecond` `microsecond` to `0`
+  DateTimeRange maskSeconds() {
+    return DateTimeRange(
+        start: DateTime(
+          start.year,
+          start.month,
+          start.day,
+          start.hour,
+          start.minute,
+        ),
+        end: DateTime(
+          end.year,
+          end.month,
+          end.day,
+          end.hour,
+          end.minute,
+        ));
+  }
+
+  /// Makes both start & end of a timeRange  `millisecond` `microsecond` to `0`
+  DateTimeRange maskMilliSeconds() {
+    return DateTimeRange(
+        start: DateTime(
+          start.year,
+          start.month,
+          start.day,
+          start.hour,
+          start.minute,
+          start.second,
+        ),
+        end: DateTime(
+          end.year,
+          end.month,
+          end.day,
+          end.hour,
+          end.minute,
+          end.second,
+        ));
+  }
 }
