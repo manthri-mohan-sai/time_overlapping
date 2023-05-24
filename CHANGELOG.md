@@ -1,4 +1,4 @@
-## 0.0.6
+## 0.1.0
 
 * Minimum version of Flutter (3.3.10 now)
 * Added few more tests to check allowTouches and ignoreSeconds
