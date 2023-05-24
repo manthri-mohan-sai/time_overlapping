@@ -32,10 +32,8 @@ void main() {
         OverlapParams('004', range4, {}),
       ];
 
-      expect(() => TimeOverlapFinder.findOverlap(overlapParams),
-          throwsAssertionError);
-      expect(() => TimeOverlapFinder.findOverlapWithData(overlapParams),
-          throwsAssertionError);
+      expect(() => TimeOverlapFinder.findOverlap(overlapParams), throwsAssertionError);
+      expect(() => TimeOverlapFinder.findOverlapWithData(overlapParams), throwsAssertionError);
     });
 
     test('Testing ordered overlap ranges', () {
@@ -89,8 +87,7 @@ void main() {
         OverlapParams('002', range2, {}),
         OverlapParams('003', range3, {}),
       ];
-      expect(
-          TimeOverlapFinder.findOverlap(overlapParams), ['001', '002', '003']);
+      expect(TimeOverlapFinder.findOverlap(overlapParams), ['001', '002', '003']);
     });
     test('Testing unOrdered overlap ranges', () {
       final range1 = DateTimeRange(
@@ -261,7 +258,7 @@ void main() {
         '009',
         '0010',
         '0012',
-        '0011'
+        '0011',
       ]);
     });
 
@@ -369,8 +366,7 @@ void main() {
       );
       print(range1);
       print(range2);
-      expect(TimeOverlapFinder.hasOverlap(range1, range2, allowTouches: false),
-          true);
+      expect(TimeOverlapFinder.hasOverlap(range1, range2, allowTouches: false), true);
     });
 
     test('Testing Allow touches: Allow touches `True`', () {
@@ -386,12 +382,10 @@ void main() {
       );
       print(range1);
       print(range2);
-      expect(TimeOverlapFinder.hasOverlap(range1, range2, allowTouches: true),
-          false);
+      expect(TimeOverlapFinder.hasOverlap(range1, range2, allowTouches: true), false);
     });
 
-    test('Testing Allow touches: Allow touches False Ignore Seconds: False',
-        () {
+    test('Testing Allow touches: Allow touches False Ignore Seconds: False', () {
       final _commonTime = DateTime.now().add(const Duration(hours: 2));
       final range1 = DateTimeRange(
         start: DateTime.now(),
@@ -412,6 +406,48 @@ void main() {
             ignoreSeconds: false,
           ),
           true);
+    });
+
+    test('Testing Allow touches: Allow touches False Ignore Seconds: True', () {
+      final range1 = DateTimeRange(start: DateTime(2023, 05, 18), end: DateTime(2023, 05, 18, 17));
+      final range2 = DateTimeRange(
+        start: DateTime(2023, 05, 18, 17, 0, 0, 299),
+        end: DateTime(2023, 05, 18, 19, 0, 0, 299),
+      );
+      final range3 = DateTimeRange(start: DateTime(2023, 05, 18, 19), end: DateTime(2023, 05, 18, 23, 59));
+      print(range1);
+      print(range2);
+      print(range3);
+      expect(
+        TimeOverlapFinder.hasOverlap(
+          range1,
+          range2,
+          allowTouches: false,
+          ignoreSeconds: true,
+        ),
+        true,
+      );
+    });
+
+    test('Testing Allow touches: Allow touches True Ignore Seconds: True', () {
+      final range1 = DateTimeRange(start: DateTime(2023, 05, 18), end: DateTime(2023, 05, 18, 17));
+      final range2 = DateTimeRange(
+        start: DateTime(2023, 05, 18, 17, 0, 0, 299),
+        end: DateTime(2023, 05, 18, 19, 0, 0, 299),
+      );
+      final range3 = DateTimeRange(start: DateTime(2023, 05, 18, 19), end: DateTime(2023, 05, 18, 23, 59));
+      print(range1);
+      print(range2);
+      print(range3);
+      expect(
+        TimeOverlapFinder.hasOverlap(
+          range1,
+          range2,
+          allowTouches: true,
+          ignoreSeconds: true,
+        ),
+        false,
+      );
     });
 
     test('Testing isCrossing function', () {
