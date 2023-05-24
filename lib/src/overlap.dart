@@ -13,8 +13,8 @@ class TimeOverlapFinder {
   /// ...
   static List<String> findOverlap(
     List<OverlapParams> overlapParams, {
-    bool allowTouches: true,
-    bool ignoreSeconds: true,
+    bool allowTouches = true,
+    bool ignoreSeconds = true,
   }) {
     try {
       if (overlapParams.length < 2) {
@@ -43,8 +43,8 @@ class TimeOverlapFinder {
   /// ...
   static List<OverlapParams> findOverlapWithData(
     List<OverlapParams> overlapParams, {
-    bool allowTouches: true,
-    bool ignoreSeconds: true,
+    bool allowTouches = true,
+    bool ignoreSeconds = true,
   }) {
     try {
       if (overlapParams.length < 2) {
@@ -82,8 +82,8 @@ class TimeOverlapFinder {
   static bool hasOverlap(
     DateTimeRange range1,
     DateTimeRange range2, {
-    bool allowTouches: true,
-    bool ignoreSeconds: true,
+    bool allowTouches = true,
+    bool ignoreSeconds = true,
   }) {
     bool _hasOverlap = !(range2.isBefore(range1) || range2.isAfter(range1));
     if (allowTouches) return _hasOverlap;
@@ -101,7 +101,7 @@ class TimeOverlapFinder {
   static bool hasTouch(
     DateTimeRange range,
     DateTimeRange other, {
-    bool ignoreSeconds: false,
+    bool ignoreSeconds = false,
   }) {
     final maskedRange =
         ignoreSeconds ? range.maskSeconds() : range.maskMilliSeconds();
@@ -115,8 +115,8 @@ class TimeOverlapFinder {
 
   static List<T> _calculateOverlapRanges<T>(
     List<OverlapParams> ranges, {
-    bool allowTouches: true,
-    bool ignoreSeconds: true,
+    bool allowTouches = true,
+    bool ignoreSeconds = true,
   }) {
     final overlapList = <T>{};
 
