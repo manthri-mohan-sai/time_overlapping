@@ -1,0 +1,24 @@
+name: Publish to pub.dev
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - run: dart pub get
+      - name: Check Publish Warnings
+        run: |
+          output=$(dart pub publish --dry-run)
+          echo "$output"
+          if [[ $output == *"warning"* ]]; then
+            exit 1
+          fi
+      - run: dart pub publish -f
+        env:
+          PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
